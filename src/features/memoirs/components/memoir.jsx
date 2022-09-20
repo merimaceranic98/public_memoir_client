@@ -22,6 +22,7 @@ const Memoir = (props) => {
           display={"flex"}
           overflowX={"hidden"}
           textOverflow={"ellipsis"}
+          paddingLeft={"8px"}
           noOfLines={2}
           backgroundColor={"gray.100"}
         >

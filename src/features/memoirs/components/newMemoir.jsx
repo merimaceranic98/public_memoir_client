@@ -1,9 +1,11 @@
+import React, { useState } from "react";
 import { Container } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { FormErrorMessage, FormControl, Input, Button } from "@chakra-ui/react";
 import Textarea from "react-textarea-autosize";
 
 const NewMemoir = () => {
+  const [memoirDescription, setMemoirDescription] = useState("");
   const {
     handleSubmit,
     register,
@@ -11,9 +13,16 @@ const NewMemoir = () => {
   } = useForm();
 
   const onSubmit = (values) => {
-    console.log("Values are, ", values);
+    const data = {
+      image: values.image,
+      content: memoirDescription,
+    };
+    console.log("Data is, ", data);
   };
 
+  const handleMemoirDescriptionChanged = (event) => {
+    setMemoirDescription(event.target.value);
+  };
   return (
     <Container>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -31,20 +40,18 @@ const NewMemoir = () => {
           </FormErrorMessage>
         </FormControl>
         <Textarea
-          id="feed_comment_input_textarea"
-          // ref={this.textareaInput}
-          // rows={1}
-          // maxLength={maxMessageLength}
-          // value={textareaValue}
-          // placeholder={placeholder}
-          // onChange={this.handleInputChanged}
-          // tabIndex={tabIndex || 0}
-          // className={`${!isEmpty(images) ? 'top-border-radius' : ''}`}
-          // data-cy="comment-input"
-          // onHeightChange={this.handleTextareaHeightChange}
-          // useCacheForDOMMeasurements={true}
+          style={{
+            width: "100%",
+            paddingTop: "4px",
+            paddingBottom: "4px",
+            outline: "none",
+          }}
+          maxLength={1000}
+          value={memoirDescription}
+          placeholder={"Memoir description..."}
+          onChange={(e) => handleMemoirDescriptionChanged(e)}
         />
-        <Button type="submit" isLoading={isSubmitting} mt={4} w={"100%"} mb={4}>
+        <Button type="submit" isLoading={isSubmitting} mt={2} w={"100%"} mb={4}>
           Add new memoir
         </Button>
       </form>
