@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container } from "@chakra-ui/react";
+import { Container, useToast } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { FormErrorMessage, FormControl, Input, Button } from "@chakra-ui/react";
@@ -10,6 +10,7 @@ import { addNewMemoir } from "../actions/memoirs-actions";
 const NewMemoir = () => {
   const [memoirDescription, setMemoirDescription] = useState("");
   const dispatch = useDispatch();
+  const toast = useToast();
   const {
     handleSubmit,
     register,
@@ -25,6 +26,14 @@ const NewMemoir = () => {
     dispatch(addNewMemoir(data));
     reset();
     setMemoirDescription("");
+    toast({
+      position: "top",
+      title: "Added new memoir",
+      description: "You've added new memoir.",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
   };
 
   const handleMemoirDescriptionChanged = (event) => {
