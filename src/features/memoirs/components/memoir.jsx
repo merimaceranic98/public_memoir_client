@@ -13,12 +13,14 @@ import {
   useDisclosure,
   Tooltip,
   useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { getMemoirById, deleteMemoirById } from "../actions/memoirs-actions";
 
 const Memoir = (props) => {
   const memoir = useSelector((state) => state.memoirs.memoir);
+  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
   const { image, content, isTemplateColumns, id } = props;
@@ -33,6 +35,14 @@ const Memoir = (props) => {
   const deleteMemoir = (memoirId) => {
     dispatch(deleteMemoirById(memoirId));
     onClose();
+    toast({
+      position: "top",
+      title: "Memoir deleted",
+      description: "You've deleted memoir.",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
   };
   return (
     <>
