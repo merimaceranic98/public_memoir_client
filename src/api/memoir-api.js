@@ -20,6 +20,12 @@ class MemoirApi {
       url: `/memoirs/${memoirId}`,
     });
   };
+  static deleteMemoirById = (memoirId) => {
+    return axios({
+      method: "DELETE",
+      url: `/memoirs/${memoirId}`,
+    });
+  };
 }
 
 export default MemoirApi;

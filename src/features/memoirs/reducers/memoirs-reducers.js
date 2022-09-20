@@ -11,6 +11,8 @@ export const memoirs = (state = memoirsInitialState, payload) => {
       return { ...state, memoirs: payload.data };
     case MEMOIRS_ACTIONS.HANDLE_MEMOIR_BY_ID:
       return { ...state, memoir: payload.data };
+    case MEMOIRS_ACTIONS.HANDLE_DELETE_MEMOIR_BY_ID:
+      return { ...state, memoirs: payload.data };
     default:
       return state;
   }

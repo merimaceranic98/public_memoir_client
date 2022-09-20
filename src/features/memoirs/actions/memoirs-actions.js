@@ -40,6 +40,19 @@ export const getMemoirById = (memoirId) => {
   };
 };
 
+export const deleteMemoirById = (memoirId) => {
+  return async (dispatch) => {
+    try {
+      await MemoirApi.deleteMemoirById(memoirId);
+      const response = await MemoirApi.getAllMemoirs();
+      const memoirs = (response.data && response.data) || [];
+      dispatch(handleGetAllMemoirs(memoirs));
+    } catch (err) {
+      //TO DO: Error handling will be implemented
+    }
+  };
+};
+
 export const handleGetAllMemoirs = (data) => ({
   type: MEMOIRS_ACTIONS.HANDLE_GET_ALL_MEMOIRS,
   data,
@@ -52,5 +65,10 @@ export const handleAddNewMemoir = (data) => ({
 
 export const handleGetMemoirById = (data) => ({
   type: MEMOIRS_ACTIONS.HANDLE_MEMOIR_BY_ID,
+  data,
+});
+
+export const handleDeleteMemoirById = (data) => ({
+  type: MEMOIRS_ACTIONS.HANDLE_DELETE_MEMOIR_BY_ID,
   data,
 });

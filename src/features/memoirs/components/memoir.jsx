@@ -15,7 +15,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
-import { getMemoirById } from "../actions/memoirs-actions";
+import { getMemoirById, deleteMemoirById } from "../actions/memoirs-actions";
 
 const Memoir = (props) => {
   const memoir = useSelector((state) => state.memoirs.memoir);
@@ -28,6 +28,11 @@ const Memoir = (props) => {
   const showMemoirDetails = (memoirId) => {
     dispatch(getMemoirById(memoirId));
     onOpen();
+  };
+
+  const deleteMemoir = (memoirId) => {
+    dispatch(deleteMemoirById(memoirId));
+    onClose();
   };
   return (
     <>
@@ -96,6 +101,14 @@ const Memoir = (props) => {
             <ModalFooter>
               <Button colorScheme="blue" mr={3} size={"xs"} onClick={onClose}>
                 Close details
+              </Button>
+              <Button
+                colorScheme="red"
+                mr={3}
+                size={"xs"}
+                onClick={() => deleteMemoir(id)}
+              >
+                Delete memoir
               </Button>
             </ModalFooter>
           </ModalContent>
