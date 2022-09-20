@@ -31,6 +31,7 @@ const Memoirs = (props) => {
         {memoirs.map((memoir) => {
           return (
             <Memoir
+              id={memoir.id}
               key={memoir.id}
               image={memoir.image}
               content={memoir.content}

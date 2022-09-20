@@ -1,42 +1,99 @@
-import { Box, GridItem, Image } from "@chakra-ui/react";
+import {
+  Box,
+  GridItem,
+  Image,
+  Modal,
+  ModalFooter,
+  ModalContent,
+  Button,
+  ModalOverlay,
+  ModalCloseButton,
+  ModalHeader,
+  ModalBody,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { useSelector, useDispatch } from "react-redux";
+import { getMemoirById } from "../actions/memoirs-actions";
 
 const Memoir = (props) => {
-  const { image, content, isTemplateColumns } = props;
+  const memoir = useSelector((state) => state.memoirs.memoir);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const dispatch = useDispatch();
+  const { image, content, isTemplateColumns, id } = props;
+
+  const showMemoirDetails = (memoirId) => {
+    dispatch(getMemoirById(memoirId));
+    onOpen();
+  };
   return (
-    <GridItem mb={2}>
-      <Box
-        backgroundColor={isTemplateColumns && "gray.100"}
-        height={isTemplateColumns ? "400px" : "300px"}
-        borderTopRadius={!isTemplateColumns && "8px"}
-        borderBottomRadius={"8px"}
-        pt={!isTemplateColumns && "8px"}
-        width={!isTemplateColumns && "50%"}
-        margin={!isTemplateColumns && "0 auto"}
-        border={!isTemplateColumns && "1px solid #EDF2F7"}
-      >
-        <Image
-          alt={content}
-          src={image}
-          borderTopRadius={"8px"}
-          height={"70%"}
-          width={isTemplateColumns ? "100%" : "auto"}
-          margin={!isTemplateColumns && "0 auto"}
-        />
+    <>
+      <GridItem mb={2} onClick={() => showMemoirDetails(id)}>
         <Box
-          as="label"
-          pt={isTemplateColumns ? "1rem" : "2rem"}
-          display={"flex"}
-          overflowX={"hidden"}
-          textOverflow={"ellipsis"}
-          paddingLeft={"8px"}
-          noOfLines={2}
-          textAlign={!isTemplateColumns && "center"}
           backgroundColor={isTemplateColumns && "gray.100"}
+          height={isTemplateColumns ? "400px" : "300px"}
+          borderTopRadius={!isTemplateColumns && "8px"}
+          borderBottomRadius={"8px"}
+          pt={!isTemplateColumns && "8px"}
+          width={!isTemplateColumns && "50%"}
+          margin={!isTemplateColumns && "0 auto"}
+          border={!isTemplateColumns && "1px solid #EDF2F7"}
         >
-          {content}
+          <Image
+            alt={content}
+            src={image}
+            borderTopRadius={"8px"}
+            height={"70%"}
+            width={isTemplateColumns ? "100%" : "auto"}
+            margin={!isTemplateColumns && "0 auto"}
+          />
+          <Box
+            as="label"
+            pt={isTemplateColumns ? "1rem" : "2rem"}
+            display={"flex"}
+            overflowX={"hidden"}
+            textOverflow={"ellipsis"}
+            paddingLeft={"8px"}
+            noOfLines={2}
+            textAlign={!isTemplateColumns && "center"}
+            backgroundColor={isTemplateColumns && "gray.100"}
+          >
+            {content}
+          </Box>
         </Box>
-      </Box>
-    </GridItem>
+      </GridItem>
+      <>
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Memoir details</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Box>
+                <Image
+                  alt={memoir.content}
+                  src={memoir.image}
+                  borderTopRadius={"8px"}
+                  height={"70%"}
+                />
+                <Box
+                  as="label"
+                  display={"flex"}
+                  overflowX={"hidden"}
+                  paddingLeft={"8px"}
+                >
+                  {memoir.content}
+                </Box>
+              </Box>
+            </ModalBody>
+            <ModalFooter>
+              <Button colorScheme="blue" mr={3} onClick={onClose}>
+                Close details
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      </>
+    </>
   );
 };
 
