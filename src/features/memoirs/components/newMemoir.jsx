@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Container, useToast } from "@chakra-ui/react";
+import { Container, useToast, useColorModeValue } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { Button } from "@chakra-ui/react";
 import Textarea from "react-textarea-autosize";
 
 import { addNewMemoir } from "../actions/memoirs-actions";
-import ImageUploader from "../../imageUploader/components/ImageUploader";
+import ImageUploader from "../../imageUploader/components/imageUploader";
 
 const NewMemoir = () => {
   const [memoirDescription, setMemoirDescription] = useState("");
@@ -13,6 +13,7 @@ const NewMemoir = () => {
   const toast = useToast();
   const [formImage, setFormImage] = useState(null);
   const [formImageName, setFormImageName] = useState(null);
+  const textAreaBackgroundColor = useColorModeValue("#ffff", "#1A202C");
 
   const handleOnDrop = (files) => {
     const file = files[0];
@@ -49,7 +50,7 @@ const NewMemoir = () => {
     });
   };
   return (
-    <Container>
+    <Container mt={"50px"}>
       <ImageUploader
         formImage={formImage}
         formImageName={formImageName}
@@ -63,6 +64,7 @@ const NewMemoir = () => {
           paddingBottom: "4px",
           outline: "none",
           margin: "0 auto",
+          backgroundColor: textAreaBackgroundColor,
         }}
         maxLength={1000}
         value={memoirDescription}

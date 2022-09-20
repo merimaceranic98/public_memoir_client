@@ -91,7 +91,7 @@ const Memoir = (props) => {
               </Box>
             </ModalBody>
             <ModalFooter>
-              <Button colorScheme="blue" mr={3} onClick={onClose}>
+              <Button colorScheme="blue" mr={3} size={"xs"} onClick={onClose}>
                 Close details
               </Button>
             </ModalFooter>

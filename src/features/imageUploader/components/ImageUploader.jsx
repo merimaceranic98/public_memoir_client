@@ -1,9 +1,12 @@
-import { Text, Button, Container } from "@chakra-ui/react";
+import { Text, Button, Container, useColorModeValue } from "@chakra-ui/react";
 import { useDropzone } from "react-dropzone";
 import { FilePlus } from "react-feather";
 
 function ImageUploader(props) {
   const { onDrop, isLoading, name, formImageName } = props;
+  const iconColor = useColorModeValue("black", "white");
+  const buttonColor = useColorModeValue("#ffff", "#1A202C");
+  const containerBorderColor = useColorModeValue("rgba(0,0,0,0.1)", "#4A5568");
 
   const options = {
     noClick: true,
@@ -20,7 +23,7 @@ function ImageUploader(props) {
       pt={"2px"}
       pb={"2px"}
       ml={0}
-      border="2px dashed rgba(0,0,0,0.1)"
+      border={`2px dashed ${containerBorderColor}`}
       alignItems="center"
       borderRadius="md"
       maxW={"auto"}
@@ -33,18 +36,18 @@ function ImageUploader(props) {
       </Text>
       <Button
         _hover={{
-          background: "#fff",
+          background: buttonColor,
           color: "#ED2130",
         }}
         _focus={{
-          background: "#fff",
+          background: buttonColor,
           color: "#ED2130",
         }}
-        backgroundColor={"#fff"}
+        backgroundColor={buttonColor}
         onClick={open}
         isLoading={isLoading}
       >
-        <FilePlus />
+        <FilePlus style={{ color: iconColor }} />
       </Button>
       <input name={name} {...getInputProps()} />
     </Container>
