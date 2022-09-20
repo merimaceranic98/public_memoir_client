@@ -16,6 +16,9 @@ function Header() {
   const linkColor = useColorModeValue("black", "white");
   const borderColor = useColorModeValue("gray.200", "gray.600");
 
+  const goToTop = () => {
+    window.scrollTo(0, 0);
+  };
   return (
     <Container
       maxW={"100%"}
@@ -33,7 +36,9 @@ function Header() {
           <Flex justifyContent={"center"}>
             <Breadcrumb spacing="8px" separator={""} p={2}>
               <BreadcrumbItem color={linkColor}>
-                <Text>Memoir</Text>
+                <Text cursor={"pointer"} onClick={() => goToTop()}>
+                  Memoir
+                </Text>
               </BreadcrumbItem>
               <BreadcrumbItem>
                 {colorMode === "light" ? (
