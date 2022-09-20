@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { Container } from "@chakra-ui/react";
+import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { FormErrorMessage, FormControl, Input, Button } from "@chakra-ui/react";
 import Textarea from "react-textarea-autosize";
 
+import { addNewMemoir } from "../actions/memoirs-actions";
+
 const NewMemoir = () => {
   const [memoirDescription, setMemoirDescription] = useState("");
+  const dispatch = useDispatch();
   const {
     handleSubmit,
     register,
@@ -17,7 +21,7 @@ const NewMemoir = () => {
       image: values.image,
       content: memoirDescription,
     };
-    console.log("Data is, ", data);
+    dispatch(addNewMemoir(data));
   };
 
   const handleMemoirDescriptionChanged = (event) => {

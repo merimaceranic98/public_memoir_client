@@ -7,6 +7,13 @@ class MemoirApi {
       url: "/memoirs",
     });
   }
+  static addNewMemoir = (data) => {
+    return axios({
+      method: "POST",
+      url: "/memoirs",
+      data,
+    });
+  };
 }
 
 export default MemoirApi;

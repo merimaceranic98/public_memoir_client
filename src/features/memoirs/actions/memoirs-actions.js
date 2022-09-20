@@ -9,12 +9,30 @@ export const getAllMemoirs = () => {
       dispatch(handleGetAllMemoirs(memoirs));
       return memoirs;
     } catch (err) {
-      //TO DO: Error handling will be implemen
+      //TO DO: Error handling will be implemented
+    }
+  };
+};
+
+export const addNewMemoir = (data) => {
+  return async (dispatch) => {
+    try {
+      await MemoirApi.addNewMemoir(data);
+      const response = await MemoirApi.getAllMemoirs();
+      const memoirs = (response.data && response.data) || [];
+      dispatch(handleGetAllMemoirs(memoirs));
+    } catch (err) {
+      //TO DO: Error handling will be implemented
     }
   };
 };
 
 export const handleGetAllMemoirs = (data) => ({
   type: MEMOIRS_ACTIONS.HANDLE_GET_ALL_MEMOIRS,
+  data,
+});
+
+export const handleAddNewMemoir = (data) => ({
+  type: MEMOIRS_ACTIONS.HANDLE_ADD_NEW_MEMOIR,
   data,
 });
