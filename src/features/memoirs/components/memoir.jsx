@@ -11,6 +11,7 @@ import {
   ModalHeader,
   ModalBody,
   useDisclosure,
+  Tooltip,
 } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { getMemoirById } from "../actions/memoirs-actions";
@@ -27,40 +28,44 @@ const Memoir = (props) => {
   };
   return (
     <>
-      <GridItem mb={2} onClick={() => showMemoirDetails(id)}>
-        <Box
-          backgroundColor={isTemplateColumns && "gray.100"}
-          height={isTemplateColumns ? "400px" : "300px"}
-          borderTopRadius={!isTemplateColumns && "8px"}
-          borderBottomRadius={"8px"}
-          pt={!isTemplateColumns && "8px"}
-          width={!isTemplateColumns && "50%"}
-          margin={!isTemplateColumns && "0 auto"}
-          border={!isTemplateColumns && "1px solid #EDF2F7"}
-        >
-          <Image
-            alt={content}
-            src={image}
-            borderTopRadius={"8px"}
-            height={"70%"}
-            width={isTemplateColumns ? "100%" : "auto"}
-            margin={!isTemplateColumns && "0 auto"}
-          />
+      <Tooltip label="Click here to see full description">
+        <GridItem mb={2} onClick={() => showMemoirDetails(id)}>
           <Box
-            as="label"
-            pt={isTemplateColumns ? "1rem" : "2rem"}
-            display={"flex"}
-            overflowX={"hidden"}
-            textOverflow={"ellipsis"}
-            paddingLeft={"8px"}
-            noOfLines={2}
-            textAlign={!isTemplateColumns && "center"}
             backgroundColor={isTemplateColumns && "gray.100"}
+            height={isTemplateColumns ? "400px" : "300px"}
+            borderTopRadius={!isTemplateColumns && "8px"}
+            borderBottomRadius={"8px"}
+            pt={!isTemplateColumns && "8px"}
+            width={!isTemplateColumns && "50%"}
+            margin={!isTemplateColumns && "0 auto"}
+            border={!isTemplateColumns && "1px solid #EDF2F7"}
           >
-            {content}
+            <Image
+              alt={content}
+              src={image}
+              borderTopRadius={"8px"}
+              height={"70%"}
+              width={isTemplateColumns ? "100%" : "auto"}
+              margin={!isTemplateColumns && "0 auto"}
+              cursor={"pointer"}
+            />
+            <Box
+              as="label"
+              pt={isTemplateColumns ? "1rem" : "2rem"}
+              display={"flex"}
+              overflowX={"hidden"}
+              textOverflow={"ellipsis"}
+              paddingLeft={"8px"}
+              noOfLines={2}
+              textAlign={!isTemplateColumns && "center"}
+              backgroundColor={isTemplateColumns && "gray.100"}
+              cursor={"pointer"}
+            >
+              {content}
+            </Box>
           </Box>
-        </Box>
-      </GridItem>
+        </GridItem>
+      </Tooltip>
       <>
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
