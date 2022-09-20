@@ -1,31 +1,44 @@
 import React, { useState } from "react";
 import { Container, useToast } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
-import { useForm } from "react-hook-form";
-import { FormErrorMessage, FormControl, Input, Button } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import Textarea from "react-textarea-autosize";
 
 import { addNewMemoir } from "../actions/memoirs-actions";
+import ImageUploader from "../../imageUploader/components/ImageUploader";
 
 const NewMemoir = () => {
   const [memoirDescription, setMemoirDescription] = useState("");
   const dispatch = useDispatch();
   const toast = useToast();
-  const {
-    handleSubmit,
-    register,
-    reset,
-    formState: { errors, isSubmitting },
-  } = useForm();
+  const [formImage, setFormImage] = useState(null);
+  const [formImageName, setFormImageName] = useState(null);
 
-  const onSubmit = (values) => {
+  const handleOnDrop = (files) => {
+    const file = files[0];
+    let fileReader = null;
+    fileReader = new FileReader();
+    fileReader.onload = (e) => {
+      const result = e.target.result;
+      setFormImage(result);
+    };
+    fileReader.readAsDataURL(file);
+    setFormImageName(file.name);
+  };
+
+  const handleMemoirDescriptionChanged = (event) => {
+    setMemoirDescription(event.target.value);
+  };
+
+  const onSubmit = () => {
     const data = {
-      image: values.image,
+      image: formImage,
       content: memoirDescription,
     };
     dispatch(addNewMemoir(data));
-    reset();
     setMemoirDescription("");
+    setFormImage(null);
+    setFormImageName(null);
     toast({
       position: "top",
       title: "Added new memoir",
@@ -35,42 +48,30 @@ const NewMemoir = () => {
       isClosable: true,
     });
   };
-
-  const handleMemoirDescriptionChanged = (event) => {
-    setMemoirDescription(event.target.value);
-  };
   return (
     <Container>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl isInvalid={errors.image} mt={4}>
-          <Input
-            id="image"
-            variant="flushed"
-            placeholder="Image"
-            {...register("image", {
-              required: "Image is required field!",
-            })}
-          />
-          <FormErrorMessage>
-            {errors.image && errors.image.message}
-          </FormErrorMessage>
-        </FormControl>
-        <Textarea
-          style={{
-            width: "100%",
-            paddingTop: "4px",
-            paddingBottom: "4px",
-            outline: "none",
-          }}
-          maxLength={1000}
-          value={memoirDescription}
-          placeholder={"Memoir description..."}
-          onChange={(e) => handleMemoirDescriptionChanged(e)}
-        />
-        <Button type="submit" isLoading={isSubmitting} mt={2} w={"100%"} mb={4}>
-          Add new memoir
-        </Button>
-      </form>
+      <ImageUploader
+        formImage={formImage}
+        formImageName={formImageName}
+        name="image"
+        onDrop={(event) => handleOnDrop(event)}
+      />
+      <Textarea
+        style={{
+          width: "100%",
+          paddingTop: "4px",
+          paddingBottom: "4px",
+          outline: "none",
+          margin: "0 auto",
+        }}
+        maxLength={1000}
+        value={memoirDescription}
+        placeholder={"Memoir description..."}
+        onChange={(e) => handleMemoirDescriptionChanged(e)}
+      />
+      <Button type="submit" onClick={() => onSubmit()} mt={2} w={"100%"} mb={4}>
+        Add new memoir
+      </Button>
     </Container>
   );
 };
