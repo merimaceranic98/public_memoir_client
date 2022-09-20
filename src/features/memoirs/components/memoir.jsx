@@ -12,6 +12,7 @@ import {
   ModalBody,
   useDisclosure,
   Tooltip,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { getMemoirById } from "../actions/memoirs-actions";
@@ -21,6 +22,8 @@ const Memoir = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
   const { image, content, isTemplateColumns, id } = props;
+  const boxBackgroundColor = useColorModeValue("gray.100", "gray.700");
+  const boxBorderColor = useColorModeValue("#EDF2F7", "#2D3748");
 
   const showMemoirDetails = (memoirId) => {
     dispatch(getMemoirById(memoirId));
@@ -31,14 +34,14 @@ const Memoir = (props) => {
       <Tooltip label="Click here to see full description">
         <GridItem mb={2} onClick={() => showMemoirDetails(id)}>
           <Box
-            backgroundColor={isTemplateColumns && "gray.100"}
+            backgroundColor={isTemplateColumns && boxBackgroundColor}
             height={isTemplateColumns ? "400px" : "300px"}
             borderTopRadius={!isTemplateColumns && "8px"}
             borderBottomRadius={"8px"}
             pt={!isTemplateColumns && "8px"}
             width={!isTemplateColumns && "50%"}
             margin={!isTemplateColumns && "0 auto"}
-            border={!isTemplateColumns && "1px solid #EDF2F7"}
+            border={!isTemplateColumns && `1px solid ${boxBorderColor}`}
           >
             <Image
               alt={content}
@@ -58,7 +61,7 @@ const Memoir = (props) => {
               paddingLeft={"8px"}
               noOfLines={2}
               textAlign={!isTemplateColumns && "center"}
-              backgroundColor={isTemplateColumns && "gray.100"}
+              backgroundColor={isTemplateColumns && boxBackgroundColor}
               cursor={"pointer"}
             >
               {content}
