@@ -13,6 +13,7 @@ const NewMemoir = () => {
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm();
 
@@ -22,6 +23,8 @@ const NewMemoir = () => {
       content: memoirDescription,
     };
     dispatch(addNewMemoir(data));
+    reset();
+    setMemoirDescription("");
   };
 
   const handleMemoirDescriptionChanged = (event) => {

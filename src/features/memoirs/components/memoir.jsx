@@ -1,30 +1,37 @@
 import { Box, GridItem, Image } from "@chakra-ui/react";
 
 const Memoir = (props) => {
-  const { image, content } = props;
+  const { image, content, isTemplateColumns } = props;
   return (
     <GridItem mb={2}>
       <Box
-        backgroundColor={"gray.100"}
-        height={"400px"}
+        backgroundColor={isTemplateColumns && "gray.100"}
+        height={isTemplateColumns ? "400px" : "300px"}
+        borderTopRadius={!isTemplateColumns && "8px"}
         borderBottomRadius={"8px"}
+        pt={!isTemplateColumns && "8px"}
+        width={!isTemplateColumns && "50%"}
+        margin={!isTemplateColumns && "0 auto"}
+        border={!isTemplateColumns && "1px solid #EDF2F7"}
       >
         <Image
           alt={content}
           src={image}
           borderTopRadius={"8px"}
           height={"70%"}
-          width={"100%"}
+          width={isTemplateColumns ? "100%" : "auto"}
+          margin={!isTemplateColumns && "0 auto"}
         />
         <Box
           as="label"
-          pt={"1rem"}
+          pt={isTemplateColumns ? "1rem" : "2rem"}
           display={"flex"}
           overflowX={"hidden"}
           textOverflow={"ellipsis"}
           paddingLeft={"8px"}
           noOfLines={2}
-          backgroundColor={"gray.100"}
+          textAlign={!isTemplateColumns && "center"}
+          backgroundColor={isTemplateColumns && "gray.100"}
         >
           {content}
         </Box>
