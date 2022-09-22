@@ -2,7 +2,7 @@ import { Text, Button, Container, useColorModeValue } from "@chakra-ui/react";
 import { useDropzone } from "react-dropzone";
 import { FilePlus } from "react-feather";
 
-function ImageUploader(props) {
+function UploaderImage(props) {
   const { onDrop, isLoading, name, formImageName } = props;
   const iconColor = useColorModeValue("black", "white");
   const buttonColor = useColorModeValue("#ffff", "#1A202C");
@@ -54,4 +54,4 @@ function ImageUploader(props) {
   );
 }
 
-export default ImageUploader;
+export default UploaderImage;

@@ -5,7 +5,7 @@ import { Button } from "@chakra-ui/react";
 import Textarea from "react-textarea-autosize";
 
 import { addNewMemoir } from "../actions/memoirs-actions";
-import ImageUploader from "../../imageUploader/components/imageUploader";
+import UploaderImage from "../../uploaderImage/components/uploaderImage";
 
 const NewMemoir = () => {
   const [memoirDescription, setMemoirDescription] = useState("");
@@ -51,7 +51,7 @@ const NewMemoir = () => {
   };
   return (
     <Container mt={"50px"}>
-      <ImageUploader
+      <UploaderImage
         formImage={formImage}
         formImageName={formImageName}
         name="image"
